@@ -16,7 +16,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "hasheem_bucket" {
-  bucket = "hasheem-demo-bucket"
+  bucket = "terraforms3bucket"
   tags = {
     Name        = "Hasheem's Bucket"
     Environment = "Dev"

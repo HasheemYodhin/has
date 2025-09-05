@@ -1,24 +1,9 @@
-terraform {
-  required_version = ">= 1.0"
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "Yodhinbucket002"  
+  acl    = "private"
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-
- 
-}
-
-provider "aws" {
-  region = "ap-south-1"
-}
-
-resource "aws_s3_bucket" "hasheem_bucket" {
-  bucket = "terraforms3buc567894237ket"
   tags = {
-    Name        = "Hasheem's Bucket"
+    Name        = "YodhinHasheembucket_1"
     Environment = "Dev"
   }
 }

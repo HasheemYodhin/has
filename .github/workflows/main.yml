@@ -1,10 +1,9 @@
-name: Terraform S3 Bucket
+name: Terraform with Plain Artifact State
 
 on:
-  workflow_dispatch:
-    
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   terraform:
@@ -18,6 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Download previous state (if exists)
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform-state
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -29,3 +33,9 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+
+      - name: Upload updated state
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform-state
+          path: terraform.tfstate

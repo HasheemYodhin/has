@@ -1,4 +1,4 @@
-name: Terraform with Plain Artifact State
+name: Terraform 
 
 on:
   push:
@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download previous state (if exists)
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: terraform-state
 
@@ -35,7 +35,7 @@ jobs:
         run: terraform apply -auto-approve
 
       - name: Upload updated state
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: terraform-state
           path: terraform.tfstate

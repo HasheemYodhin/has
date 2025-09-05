@@ -1,28 +1,29 @@
-name: Basic CI Workflow
+name: Terraform S3 Bucket
 
 on:
-#  workflow_dispatch:
-  
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  terraform:
     runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
 
-      - name: Install dependencies
-        run: npm install
+      - name: Terraform Init
+        run: terraform init
 
-      - name: Run tests
-        run: npm test
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
